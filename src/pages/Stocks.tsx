@@ -32,8 +32,8 @@ export default function StocksPage() {
     const q = search.trim().toLowerCase()
     let list = stocksQuery.data ?? []
     if (exchange !== 'ALL') list = list.filter((s) => s.exchange?.toUpperCase() === exchange)
-    if (q) list = list.filter((s) => s.symbol.toLowerCase().includes(q) || s.companyName.toLowerCase().includes(q))
-    return [...list].sort((a, b) => (sortAsc ? a.symbol.localeCompare(b.symbol) : b.symbol.localeCompare(a.symbol)))
+    if (q) list = list.filter((s) => (s.symbol ?? '').toLowerCase().includes(q) || (s.companyName ?? '').toLowerCase().includes(q))
+    return [...list].sort((a, b) => (sortAsc ? (a.symbol ?? '').localeCompare(b.symbol ?? '') : (b.symbol ?? '').localeCompare(a.symbol ?? '')))
   }, [stocksQuery.data, search, exchange, sortAsc])
 
   return (

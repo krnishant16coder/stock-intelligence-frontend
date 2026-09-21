@@ -49,7 +49,8 @@ export function StatusDot({ status }: { status?: AlertStatus | string | null }) 
 
 export function ConfidenceBar({ value }: { value?: number | null }) {
   if (value === null || value === undefined) return <span className="text-sm text-muted-foreground">—</span>
-  const pct = Math.round(value * 100)
+  const normalized = value > 1 ? value : value * 100
+  const pct = Math.min(100, Math.max(0, Math.round(normalized)))
   const tone = pct >= 75 ? 'bg-emerald-500' : pct >= 50 ? 'bg-sky-500' : pct >= 30 ? 'bg-amber-500' : 'bg-red-500'
   return (
     <span className="inline-flex min-w-[120px] items-center gap-2">
