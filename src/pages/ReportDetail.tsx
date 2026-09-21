@@ -13,8 +13,8 @@ import { formatConfidence, formatDateTime } from '@/lib/format'
 
 export default function ReportDetailPage() {
   const { id } = useParams()
-  const reportId = id !== undefined ? Number(id) : undefined
-  const valid = reportId !== undefined && Number.isFinite(reportId)
+  const reportId = id !== undefined && /^\d+$/.test(id) ? Number(id) : undefined
+  const valid = reportId !== undefined
   const query = useReport(valid ? reportId : undefined)
 
   if (!valid) {

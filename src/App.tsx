@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Link, createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AppShell } from '@/components/layout/AppShell'
 import DashboardPage from '@/pages/Dashboard'
 import StocksPage from '@/pages/Stocks'
@@ -30,7 +30,7 @@ function NotFound() {
       <p className="font-mono-num text-sm text-muted-foreground">404</p>
       <h1 className="mt-2 text-2xl font-bold">Page not found</h1>
       <p className="mt-1 text-sm text-muted-foreground">The page you requested does not exist.</p>
-      <a href="/" className="mt-4 text-sm font-medium text-primary underline underline-offset-4">Back to dashboard</a>
+      <Link to="/" className="mt-4 text-sm font-medium text-primary underline underline-offset-4">Back to dashboard</Link>
     </div>
   )
 }

@@ -22,7 +22,7 @@ function buildUrl(path: string, params?: Record<string, string | number | undefi
   const qs = new URLSearchParams()
   if (params) {
     for (const [k, v] of Object.entries(params)) {
-      if (v !== undefined && v !== null && v !== '') qs.append(k, String(v))
+      if (v !== undefined && v !== null && v !== '' && !(typeof v === 'number' && Number.isNaN(v))) qs.append(k, String(v))
     }
   }
   const query = qs.toString()
@@ -42,10 +42,11 @@ function friendlyMessage(status: number, body?: ApiErrorBody, fallback?: string)
 
 async function request<T>(path: string, init?: RequestInit, params?: Record<string, string | number | undefined | null>): Promise<T> {
   let res: Response
+  const hasBody = init?.body !== undefined
   try {
     res = await fetch(buildUrl(path, params), {
       ...init,
-      headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
+      headers: { ...(hasBody ? { 'Content-Type': 'application/json' } : {}), ...(init?.headers ?? {}) },
     })
   } catch {
     throw new ApiError(0, 'Cannot reach the backend. Please retry shortly.')

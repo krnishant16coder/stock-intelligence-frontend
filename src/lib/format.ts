@@ -63,7 +63,8 @@ export function timeAgo(iso?: DateInput): string {
 
 export function formatConfidence(v: number | null | undefined): string {
   if (v === null || v === undefined || Number.isNaN(v)) return '—'
-  return `${Math.round(v * 100)}%`
+  const normalized = v > 1 ? v : v * 100
+  return `${Math.min(100, Math.max(0, Math.round(normalized)))}%`
 }
 
 export function prettifyEnum(v?: string | null): string {

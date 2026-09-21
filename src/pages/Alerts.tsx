@@ -25,7 +25,8 @@ export default function AlertsPage() {
   const [search, setSearch] = React.useState('')
 
   // Backend supports ?status= & ?stockId= ; severity + text are client-side refinements.
-  const query = useAlerts(status === 'ALL' ? undefined : status, stockFilter === 'ALL' ? undefined : Number(stockFilter))
+  const parsedStockId = stockFilter === 'ALL' ? undefined : Number(stockFilter)
+  const query = useAlerts(status === 'ALL' ? undefined : status, parsedStockId !== undefined && Number.isFinite(parsedStockId) ? parsedStockId : undefined)
   const stocks = useStocks()
   const markRead = useMarkAlertRead()
 
