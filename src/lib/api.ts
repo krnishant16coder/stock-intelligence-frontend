@@ -1,7 +1,7 @@
 /**
  * Minimal typed fetch client for the Stock Intelligence V1 backend.
  * Base URL defaults to same-origin (Vite dev proxy forwards /api + /actuator
- * to http://localhost:8080). Override with VITE_API_URL for production.
+ * to the configured backend). Override with VITE_API_URL for production.
  */
 import type { ApiErrorBody } from './types'
 
@@ -32,7 +32,7 @@ function buildUrl(path: string, params?: Record<string, string | number | undefi
 function friendlyMessage(status: number, body?: ApiErrorBody, fallback?: string): string {
   const serverMsg = body?.error || body?.message
   if (serverMsg) return serverMsg
-  if (status === 0) return 'Cannot reach the backend. Is Spring Boot running on :8080?'
+  if (status === 0) return 'Cannot reach the backend. Please retry shortly.'
   if (status === 400) return fallback ?? 'Invalid request. Please check the form values.'
   if (status === 404) return fallback ?? 'Resource not found. It may have been deleted.'
   if (status === 502) return 'Market-data provider is unavailable. Please retry shortly.'
@@ -48,7 +48,7 @@ async function request<T>(path: string, init?: RequestInit, params?: Record<stri
       headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
     })
   } catch {
-    throw new ApiError(0, 'Cannot reach the backend. Is Spring Boot running on :8080?')
+    throw new ApiError(0, 'Cannot reach the backend. Please retry shortly.')
   }
   if (res.status === 204) return undefined as T
   const text = await res.text()

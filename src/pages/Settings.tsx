@@ -72,7 +72,7 @@ export default function SettingsPage() {
               <Row k="REST base" v="/api (stocks, watchlists, schedules, reports, alerts)" mono />
               <Row k="Health" v="/actuator/health" mono />
               <Row k="Info" v="/actuator/info" mono />
-              <Row k="Swagger" v="http://localhost:8080/swagger-ui.html" mono />
+              <Row k="Swagger" v="https://stockintel-api-new-b7bafzh6hhb9edhq.centralindia-01.azurewebsites.net/swagger-ui.html" mono />
             </dl>
           </CardContent>
         </Card>
